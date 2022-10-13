@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:instagram_clone/responsive_layout_screen/responsive.dart';
 import 'package:instagram_clone/responsive_layout_screen/web_screen_layout.dart';
+import 'package:instagram_clone/screen/login_screen.dart';
 
 import 'package:instagram_clone/screen/signup_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Instagram clone',
       home: const ResponsiveLayout(
-        mobscreenlayout: SignUpScreen(),
+        mobscreenlayout: LoginScreen(),
         webscreenlayout: WebScreenLayout(),
       ),
     );

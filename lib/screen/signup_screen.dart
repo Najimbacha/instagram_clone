@@ -21,6 +21,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _biocontroller = TextEditingController();
   final TextEditingController _usernamecontroller = TextEditingController();
   Uint8List? _image;
+  bool _isLoading = false;
+
+  void signUpUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String res = await AuthMetod().signUpUser(
+        email: _emailcontroller.text,
+        password: _passcontroller.text,
+        username: _usernamecontroller.text,
+        bio: _biocontroller.text,
+        file: _image!);
+    if (res != "Success") {
+      showSnackBar(context, res);
+    }
+    setState(() {
+      _isLoading = false;
+    });
+  }
 
   void selectImage() async {
     Uint8List im = await pickImage(ImageSource.gallery);
@@ -112,15 +131,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               const SizedBox(height: 24),
               InkWell(
-                onTap: () async {
-                  String res = await AuthMetod().signUpUser(
-                    email: _emailcontroller.text,
-                    password: _passcontroller.text,
-                    username: _usernamecontroller.text,
-                    bio: _biocontroller.text,
-                  );
-                  print(res);
-                },
+                onTap: signUpUser,
                 child: Container(
                   decoration: const ShapeDecoration(
                       shape: RoundedRectangleBorder(
@@ -134,7 +145,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   padding: const EdgeInsets.symmetric(
                     vertical: 12,
                   ),
-                  child: const Text("Sign up"),
+                  child: _isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                            color: primaryColor,
+                          ),
+                        )
+                      : const Text("Sign up"),
                 ),
               ),
               const SizedBox(

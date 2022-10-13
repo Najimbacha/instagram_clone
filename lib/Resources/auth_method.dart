@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
+import 'package:instagram_clone/Resources/storage_method.dart';
 
 class AuthMetod {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -11,7 +13,7 @@ class AuthMetod {
     required String password,
     required String username,
     required String bio,
-    // required Uint8List file,
+    required Uint8List file,
   }) async {
     String res = "Some Error occure";
     try {
@@ -25,7 +27,12 @@ class AuthMetod {
           email: email,
           password: password,
         );
-        print(cred.user!.uid);
+
+        String photourl = await StorageMethod().uploadimagetostorage(
+          'profile pic',
+          file,
+          false,
+        );
 
         //database
 
@@ -37,9 +44,35 @@ class AuthMetod {
             'Bio': bio,
             'Follower': [],
             'Following': [],
+            'photourl': photourl,
           },
         );
         res = "success";
+      }
+    } on FirebaseAuthException catch (err) {
+      if (err.code == 'invalid-email') {
+        res = "Badly Formatted";
+      } else if (err.code == 'weak-password') {
+        res = "weak password";
+      }
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
+
+  Future<String> loginUser(
+      {required String email, required String password}) async {
+    String res = "Some Error Occured ";
+    try {
+      if (email.isNotEmpty || password.isNotEmpty) {
+        await _auth.signInWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
+        res = "Success";
+      } else {
+        res = "Please enter email and password";
       }
     } catch (err) {
       res = err.toString();
