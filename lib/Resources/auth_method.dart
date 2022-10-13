@@ -47,7 +47,7 @@ class AuthMetod {
             'photourl': photourl,
           },
         );
-        res = "success";
+        res = "Success";
       }
     } on FirebaseAuthException catch (err) {
       if (err.code == 'invalid-email') {
@@ -73,6 +73,12 @@ class AuthMetod {
         res = "Success";
       } else {
         res = "Please enter email and password";
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print("User Not found");
+      } else if (e.code == 'wrong-password') {
+        print("Wrong password");
       }
     } catch (err) {
       res = err.toString();

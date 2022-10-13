@@ -1,11 +1,13 @@
-// ignore_for_file: sort_child_properties_last
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instagram_clone/Resources/auth_method.dart';
+import 'package:instagram_clone/screen/signup_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:instagram_clone/utils/utils.dart';
 import 'package:instagram_clone/widgets/text_field.dart';
+
+import '../responsive_layout_screen/responsive.dart';
+import '../responsive_layout_screen/web_screen_layout.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -28,12 +30,25 @@ class _LoginScreenState extends State<LoginScreen> {
         email: _emailcontroller.text, password: _passcontroller.text);
 
     if (res == 'Success') {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+            mobscreenlayout: LoginScreen(),
+            webscreenlayout: WebScreenLayout(),
+          ),
+        ),
+      );
     } else {
       showSnackBar(context, res);
     }
     setState(() {
       _isLoading = false;
     });
+  }
+
+  void signupScreen() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => const SignUpScreen()));
   }
 
   @override
@@ -56,8 +71,8 @@ class _LoginScreenState extends State<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Flexible(
-                child: Container(),
                 flex: 2,
+                child: Container(),
               ),
               SvgPicture.asset(
                 'assets/ic_instagram.svg',
@@ -104,8 +119,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 12,
               ),
               Flexible(
-                child: Container(),
                 flex: 2,
+                child: Container(),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -118,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     width: 5,
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: signupScreen,
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       child: const Text(
