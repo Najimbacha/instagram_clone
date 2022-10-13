@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instagram_clone/Resources/auth_method.dart';
+import 'package:instagram_clone/homescree.dart';
+import 'package:instagram_clone/screen/login_screen.dart';
 import 'package:instagram_clone/utils/utils.dart';
 import 'package:instagram_clone/widgets/text_field.dart';
 
+import '../responsive_layout_screen/responsive.dart';
+import '../responsive_layout_screen/web_screen_layout.dart';
 import '../utils/colors.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -33,8 +37,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
         username: _usernamecontroller.text,
         bio: _biocontroller.text,
         file: _image!);
-    if (res != "Success") {
-      showSnackBar(context, res);
+    if (res == "Success") {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+            mobscreenlayout: HomeScreen(),
+            webscreenlayout: WebScreenLayout(),
+          ),
+        ),
+      );
+    } else {
+      if (res != "Success") {
+        showSnackBar(context, res);
+      }
     }
     setState(() {
       _isLoading = false;
@@ -46,6 +61,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
     setState(() {
       _image = im;
     });
+  }
+
+  void navigatetosignupScreen() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => const LoginScreen()));
   }
 
   @override
@@ -172,11 +192,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     width: 5,
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: navigatetosignupScreen,
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       child: const Text(
-                        "Sign In",
+                        "Log In",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
