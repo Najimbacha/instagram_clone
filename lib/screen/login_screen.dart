@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instagram_clone/Resources/auth_method.dart';
+import 'package:instagram_clone/homescree.dart';
 import 'package:instagram_clone/screen/signup_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:instagram_clone/utils/utils.dart';
@@ -29,17 +30,19 @@ class _LoginScreenState extends State<LoginScreen> {
     String res = await AuthMetod().loginUser(
         email: _emailcontroller.text, password: _passcontroller.text);
 
-    if (res == 'Success') {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => const ResponsiveLayout(
-            mobscreenlayout: LoginScreen(),
-            webscreenlayout: WebScreenLayout(),
-          ),
-        ),
-      );
+    if (res == 'nextscreenplease') {
+      nextscreenreplace();
+
+      // Navigator.of(context).pushReplacement(
+      //   MaterialPageRoute(
+      //     builder: (context) => const ResponsiveLayout(
+      //       mobscreenlayout: LoginScreen(),
+      //       webscreenlayout: WebScreenLayout(),
+      //     ),
+      //   ),
+      // );
     } else {
-      showSnackBar(context, res);
+      // showSnackBar(context, res);
     }
     setState(() {
       _isLoading = false;
@@ -149,5 +152,14 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  void nextscreenreplace() {
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+      builder: (context) => const ResponsiveLayout(
+        mobscreenlayout: HomeScreen(),
+        webscreenlayout: WebScreenLayout(),
+      ),
+    ));
   }
 }

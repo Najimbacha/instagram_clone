@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:instagram_clone/Resources/storage_method.dart';
+import 'package:instagram_clone/models/user.dart' as model;
+
+String followers = "";
 
 class AuthMetod {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -34,20 +37,22 @@ class AuthMetod {
           false,
         );
 
+        model.User user = model.User(
+            username: username,
+            uid: cred.user!.uid,
+            email: email,
+            bio: bio,
+            followers: followers,
+            following: followers,
+            photourl: photourl);
+
         //database
 
-        await _firestore.collection('users').doc(cred.user!.uid).set(
-          {
-            'Username': username,
-            'Uid': cred.user!.uid,
-            'Email': email,
-            'Bio': bio,
-            'Follower': [],
-            'Following': [],
-            'photourl': photourl,
-          },
-        );
-        res = "Success";
+        await _firestore
+            .collection('users')
+            .doc(cred.user!.uid)
+            .set(user.toJson());
+        res = "nextscreenplease";
       }
     } on FirebaseAuthException catch (err) {
       if (err.code == 'invalid-email') {
@@ -70,7 +75,7 @@ class AuthMetod {
           email: email,
           password: password,
         );
-        res = "Success";
+        res = "nextscreenplease";
       } else {
         res = "Please enter email and password";
       }

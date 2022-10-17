@@ -37,20 +37,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
         username: _usernamecontroller.text,
         bio: _biocontroller.text,
         file: _image!);
-    if (res == "Success") {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => const ResponsiveLayout(
-            mobscreenlayout: HomeScreen(),
-            webscreenlayout: WebScreenLayout(),
-          ),
-        ),
-      );
-    } else {
-      if (res != "Success") {
-        showSnackBar(context, res);
-      }
-    }
+
+    nextscreenreplace();
+    // if (res == "Success") {
+    //   nextscreenreplace();
+    // } else {
+    //   if (res != "Success") {
+    //     // showSnackBar(context, res);
+    //   }
+    // }
     setState(() {
       _isLoading = false;
     });
@@ -208,5 +203,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
     );
+  }
+
+  void nextscreenreplace() {
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+      builder: (context) => const ResponsiveLayout(
+        mobscreenlayout: HomeScreen(),
+        webscreenlayout: WebScreenLayout(),
+      ),
+    ));
   }
 }
