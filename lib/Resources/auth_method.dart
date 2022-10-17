@@ -1,14 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:instagram_clone/Resources/storage_method.dart';
 import 'package:instagram_clone/models/user.dart' as model;
 
-String followers = "";
+// String followers = "";
 
 class AuthMetod {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  Future<model.User> getUserDetail() async {
+    User currentUser = _auth.currentUser!;
+
+    DocumentSnapshot snap =
+        await _firestore.collection('users').doc(currentUser.uid).get();
+    return model.User.fromSnap(snap);
+  }
 
   //signup
   Future<String> signUpUser({
@@ -42,8 +51,8 @@ class AuthMetod {
             uid: cred.user!.uid,
             email: email,
             bio: bio,
-            followers: followers,
-            following: followers,
+            followers: [].toString(),
+            following: [].toString(),
             photourl: photourl);
 
         //database
@@ -81,10 +90,7 @@ class AuthMetod {
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print("User Not found");
-      } else if (e.code == 'wrong-password') {
-        print("Wrong password");
-      }
+      } else if (e.code == 'wrong-password') {}
     } catch (err) {
       res = err.toString();
     }

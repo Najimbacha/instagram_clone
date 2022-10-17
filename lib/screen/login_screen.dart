@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instagram_clone/Resources/auth_method.dart';
-import 'package:instagram_clone/homescree.dart';
+import 'package:instagram_clone/responsive_layout_screen/mobile_screen_layout.dart';
 import 'package:instagram_clone/screen/signup_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
-import 'package:instagram_clone/utils/utils.dart';
 import 'package:instagram_clone/widgets/text_field.dart';
 
 import '../responsive_layout_screen/responsive.dart';
@@ -154,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void nextscreenreplace() {
     Navigator.of(context).pushReplacement(MaterialPageRoute(
       builder: (context) => const ResponsiveLayout(
-        mobscreenlayout: HomeScreen(),
+        mobscreenlayout: MobileScreenLayout(),
         webscreenlayout: WebScreenLayout(),
       ),
     ));

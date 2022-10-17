@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "699837291302-khhbbcknmtnml970v780dh44ah682gmo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.najimbacha.instagram_clone",
+            "certificate_hash": "2429a496fc44422faa8877f357bfa5830b62558d"
+          }
+        },
+        {
           "client_id": "699837291302-p6qb5bm9nnnfd2030bvlhev8l73qjm6f.apps.googleusercontent.com",
           "client_type": 3
         }
