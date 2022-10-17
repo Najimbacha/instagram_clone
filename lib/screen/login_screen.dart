@@ -30,19 +30,16 @@ class _LoginScreenState extends State<LoginScreen> {
     String res = await AuthMetod().loginUser(
         email: _emailcontroller.text, password: _passcontroller.text);
 
-    if (res == 'nextscreenplease') {
+    if (res == 'nextscreenreplace') {
       nextscreenreplace();
-
-      // Navigator.of(context).pushReplacement(
-      //   MaterialPageRoute(
-      //     builder: (context) => const ResponsiveLayout(
-      //       mobscreenlayout: LoginScreen(),
-      //       webscreenlayout: WebScreenLayout(),
-      //     ),
-      //   ),
-      // );
     } else {
-      // showSnackBar(context, res);
+      showDialog(
+        context: context,
+        builder: (_) => const AlertDialog(
+          title: Text("error"),
+          content: Text("Enter correct information "),
+        ),
+      );
     }
     setState(() {
       _isLoading = false;

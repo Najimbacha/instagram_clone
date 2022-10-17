@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -38,14 +40,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
         bio: _biocontroller.text,
         file: _image!);
 
-    nextscreenreplace();
-    // if (res == "Success") {
-    //   nextscreenreplace();
-    // } else {
-    //   if (res != "Success") {
-    //     // showSnackBar(context, res);
-    //   }
-    // }
+    res = 'nextscreenplease';
+
+    if (res == 'nextscreenplease') {
+      nextscreenreplace();
+    } else {
+      showDialog(
+        context: context,
+        builder: (_) => const AlertDialog(
+          title: Text("Error"),
+          content: Text("Please provide all information in order to register "),
+        ),
+      );
+    }
+
     setState(() {
       _isLoading = false;
     });

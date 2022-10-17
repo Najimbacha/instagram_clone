@@ -75,7 +75,7 @@ class AuthMetod {
           email: email,
           password: password,
         );
-        res = "nextscreenplease";
+        res = "nextscreenreplace";
       } else {
         res = "Please enter email and password";
       }
