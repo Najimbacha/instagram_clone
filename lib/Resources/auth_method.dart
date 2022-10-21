@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:instagram_clone/Resources/storage_method.dart';
 import 'package:instagram_clone/models/user.dart' as model;
@@ -51,8 +51,8 @@ class AuthMetod {
             uid: cred.user!.uid,
             email: email,
             bio: bio,
-            followers: [].toString(),
-            following: [].toString(),
+            followers: "",
+            following: "",
             photourl: photourl);
 
         //database
