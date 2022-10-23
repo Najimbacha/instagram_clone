@@ -5,8 +5,8 @@ class User {
   final String uid;
   final String email;
   final String bio;
-  final String followers;
-  final String following;
+  final List followers;
+  final List following;
   final String photourl;
 
   const User({

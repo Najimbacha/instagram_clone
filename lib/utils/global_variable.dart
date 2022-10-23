@@ -6,7 +6,7 @@ const webscreensize = 600;
 const homescreenItems = [
   Center(child: Text("Feed")),
   Center(child: Text("Search")),
-  Center(child: AddPostScreen()),
+  AddPostScreen(),
   Center(child: Text("Notification")),
   Center(child: Text("Profile")),
 ];
