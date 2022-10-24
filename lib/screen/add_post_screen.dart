@@ -27,9 +27,11 @@ class _AddPostScreenState extends State<AddPostScreen> {
       String res = await FirestoreMethod().uploadPost(
           _descriptioncontroller.text, uid, _file!, userName, profileImage);
       if (res == 'done') {
-        // showSnackBar(context, 'posted');
+        // ignore: use_build_context_synchronously
+        showSnackBar(context, 'posted');
       } else {
-        // showSnackBar(context, res);
+        // ignore: use_build_context_synchronously
+        showSnackBar(context, res);
       }
     } catch (e) {
       showSnackBar(context, e.toString());
@@ -92,81 +94,90 @@ class _AddPostScreenState extends State<AddPostScreen> {
   Widget build(BuildContext context) {
     final User user = Provider.of<UserProvider>(context).getUser;
 
-    return _file == null
-        ? Center(
-            child: IconButton(
-              onPressed: () => _selectImage(context),
-              icon: const Icon(
-                Icons.upload,
-              ),
+    return user == null
+        ? const Center(
+            child: CircularProgressIndicator(
+              color: Colors.black,
             ),
           )
-        : Scaffold(
-            appBar: AppBar(
-              backgroundColor: mobileBackgroundColor,
-              leading: IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.arrow_back,
+        : _file == null
+            ? Center(
+                child: IconButton(
+                  color: primaryColor,
+                  onPressed: () => _selectImage(context),
+                  icon: const Icon(
+                    Icons.upload,
+                  ),
                 ),
-              ),
-              title: const Text("Post to "),
-              centerTitle: false,
-              actions: [
-                TextButton(
-                  // onPressed: () {},
-                  onPressed: postImage(user.uid, user.username, user.photourl),
-                  child: const Text(
-                    "Post",
-                    style: TextStyle(
-                      color: Colors.blueAccent,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
+              )
+            : Scaffold(
+                appBar: AppBar(
+                  backgroundColor: mobileBackgroundColor,
+                  leading: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.arrow_back,
                     ),
                   ),
-                )
-              ],
-            ),
-            body: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      backgroundImage: NetworkImage(user.photourl),
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.45,
-                      child: TextField(
-                        controller: _descriptioncontroller,
-                        decoration: const InputDecoration(
-                          hintText: "Write a caption...",
-                          border: InputBorder.none,
+                  title: const Text("Post to "),
+                  centerTitle: false,
+                  actions: [
+                    TextButton(
+                      onPressed: () =>
+                          postImage(user.uid, user.username, user.photourl),
+                      // onPressed:
+                      //     postImage(user.uid, user.username, user.photourl),
+                      child: const Text(
+                        "Post",
+                        style: TextStyle(
+                          color: Colors.blueAccent,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
                         ),
-                        maxLines: 8,
                       ),
-                    ),
-                    SizedBox(
-                      height: 45,
-                      width: 45,
-                      child: AspectRatio(
-                        aspectRatio: 487 / 451,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                fit: BoxFit.cover,
-                                alignment: FractionalOffset.topCenter,
-                                image: MemoryImage(_file!)),
+                    )
+                  ],
+                ),
+                body: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CircleAvatar(
+                          backgroundImage: NetworkImage(user.photourl),
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.45,
+                          child: TextField(
+                            controller: _descriptioncontroller,
+                            decoration: const InputDecoration(
+                              hintText: "Write a caption...",
+                              border: InputBorder.none,
+                            ),
+                            maxLines: 8,
                           ),
                         ),
-                      ),
-                    ),
-                    const Divider(),
+                        SizedBox(
+                          height: 45,
+                          width: 45,
+                          child: AspectRatio(
+                            aspectRatio: 487 / 451,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    alignment: FractionalOffset.topCenter,
+                                    image: MemoryImage(_file!)),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const Divider(),
+                      ],
+                    )
                   ],
-                )
-              ],
-            ),
-          );
+                ),
+              );
   }
 }
