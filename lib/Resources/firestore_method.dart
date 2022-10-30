@@ -39,4 +39,56 @@ class FirestoreMethod {
     }
     return res;
   }
+
+  Future<void> likePost(String postId, String uid, List likes) async {
+    try {
+      if (likes.contains(uid)) {
+        await _firestore.collection('posts').doc(postId).update({
+          'likes': FieldValue.arrayRemove([uid])
+        });
+      } else {
+        await _firestore.collection('posts').doc(postId).update({
+          'likes': FieldValue.arrayUnion([uid])
+        });
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> postComment(String postId, String text, String uid, String name,
+      String profilePic) async {
+    try {
+      if (text.isNotEmpty) {
+        String commentId = const Uuid().v1();
+        await _firestore
+            .collection('posts')
+            .doc(postId)
+            .collection('comments')
+            .doc(commentId)
+            .set(
+          {
+            'profilePic': profilePic,
+            'name': name,
+            'uid': uid,
+            'text': text,
+            'commentid': commentId,
+            'datePublished': DateTime.now()
+          },
+        );
+      } else {
+        print("text Is empty");
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> postDelete(String postId) async {
+    try {
+      await _firestore.collection('posts').doc(postId).delete();
+    } catch (err) {
+      print(err.toString());
+    }
+  }
 }
