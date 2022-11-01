@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:instagram_clone/Resources/storage_method.dart';
 import 'package:instagram_clone/models/post.dart';
@@ -89,6 +90,37 @@ class FirestoreMethod {
       await _firestore.collection('posts').doc(postId).delete();
     } catch (err) {
       print(err.toString());
+    }
+  }
+
+  Future<void> followUser(
+    String uid,
+    String followid,
+  ) async {
+    try {
+      DocumentSnapshot snap =
+          await _firestore.collection('users').doc(uid).get();
+      List following = (snap.data()! as dynamic)['Following'];
+
+      if (following.contains(followid)) {
+        await _firestore.collection('users').doc(followid).update({
+          'Follower': FieldValue.arrayRemove([uid])
+        });
+        await _firestore.collection('users').doc(uid).update(
+          {
+            'Following': FieldValue.arrayRemove([followid])
+          },
+        );
+      } else {
+        await _firestore.collection('users').doc(followid).update({
+          'Follower': FieldValue.arrayUnion([uid])
+        });
+        await _firestore.collection('users').doc(uid).update({
+          'Following': FieldValue.arrayUnion([followid])
+        });
+      }
+    } catch (e) {
+      print(e.toString());
     }
   }
 }

@@ -251,20 +251,21 @@ class _PostCardState extends State<PostCard> {
                     //TODO i will add comment feature later
                   },
                   child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    padding: const EdgeInsets.symmetric(vertical: 2),
                     child: const Text(
-                      "View all 200 comments",
-                      style: TextStyle(fontSize: 16, color: secondaryColor),
+                      "View 1 comment",
+                      style: TextStyle(fontSize: 14, color: secondaryColor),
                     ),
                   ),
                 ),
+
                 Container(
-                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  padding: const EdgeInsets.symmetric(vertical: 2),
                   child: Text(
                     DateFormat.yMMMd().format(
                       widget.snap['publishDate'].toDate(),
                     ),
-                    style: const TextStyle(fontSize: 16, color: secondaryColor),
+                    style: const TextStyle(fontSize: 15, color: secondaryColor),
                   ),
                 ),
               ],

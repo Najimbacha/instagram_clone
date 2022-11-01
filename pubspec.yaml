@@ -47,6 +47,14 @@ dependencies:
   uuid: ^3.0.6
 
 dev_dependencies:
+  flutter_launcher_icons: "^0.10.0"
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/najim.jpg"
+  min_sdk_android: 21 # android min sdk min:
+  
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter

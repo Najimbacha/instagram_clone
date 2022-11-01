@@ -27,90 +27,87 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     final model.User user = Provider.of<UserProvider>(context).getUser;
-    return SafeArea(
-      top: true,
-      child: Scaffold(
-        appBar: AppBar(
-          centerTitle: false,
-          toolbarHeight: 10,
-          backgroundColor: Colors.black,
-          title: TextFormField(
-            decoration: InputDecoration(
-              fillColor: Colors.grey[1000],
-              filled: true,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              labelText: 'Search',
-              prefixIcon: const Icon(Icons.search),
-            ),
-            onFieldSubmitted: (String _) {
-              setState(() {
-                isShowUser = true;
-              });
-            },
-            controller: _searchController,
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: false,
+        toolbarHeight: 30,
+        backgroundColor: Colors.black,
+        title: TextFormField(
+          decoration: InputDecoration(
+            fillColor: Colors.grey[1000],
+            filled: true,
+            labelText: 'Search',
+            prefixIcon: const Icon(Icons.search),
           ),
-          elevation: 0,
+          onFieldSubmitted: (String _) {
+            setState(() {
+              isShowUser = true;
+            });
+          },
+          controller: _searchController,
         ),
-        body: isShowUser
-            ? FutureBuilder(
-                future: FirebaseFirestore.instance
-                    .collection('users')
-                    .where('Username',
-                        isGreaterThanOrEqualTo: _searchController.text)
-                    .get(),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return const Center(
-                      child: CircularProgressIndicator(
-                        color: primaryColor,
-                      ),
-                    );
-                  }
-                  return ListView.builder(
-                    itemCount: (snapshot.data! as dynamic).docs.length,
-                    itemBuilder: (contextx, index) {
-                      return InkWell(
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => ProfileScreen(
-                                uid: (snapshot.data as dynamic).docs[index]
-                                    ['Uid'],
-                              ),
-                            ),
-                          );
-                        },
-                        child: ListTile(
-                          leading: CircleAvatar(
-                            backgroundImage: NetworkImage(
-                              (snapshot.data as dynamic).docs[index]
-                                  ['photoUrl'],
+        elevation: 0,
+      ),
+      body: isShowUser
+          ? FutureBuilder(
+              future: FirebaseFirestore.instance
+                  .collection('users')
+                  .where('Username',
+                      isGreaterThanOrEqualTo: _searchController.text)
+                  .get(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: primaryColor,
+                    ),
+                  );
+                }
+                return ListView.builder(
+                  itemCount: (snapshot.data! as dynamic).docs.length,
+                  itemBuilder: (contextx, index) {
+                    return InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => ProfileScreen(
+                              uid: (snapshot.data as dynamic).docs[index]
+                                  ['Uid'],
                             ),
                           ),
-                          title: Text(
-                            (snapshot.data as dynamic).docs[index]['Username'],
+                        );
+                      },
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage: NetworkImage(
+                            (snapshot.data as dynamic).docs[index]['photourl'],
                           ),
                         ),
-                      );
-                    },
-                  );
-                },
-              )
-            : FutureBuilder(
-                future: FirebaseFirestore.instance.collection('posts').get(),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return const Center(
-                      child: CircularProgressIndicator(
-                        color: primaryColor,
+                        title: Text(
+                          (snapshot.data as dynamic).docs[index]['Username'],
+                        ),
                       ),
                     );
-                  }
+                  },
+                );
+              },
+            )
+          : FutureBuilder(
+              future: FirebaseFirestore.instance.collection('posts').get(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: primaryColor,
+                    ),
+                  );
+                }
 
-                  return StaggeredGrid.count(
+                return Padding(
+                  padding: const EdgeInsets.only(top: 20, left: 3),
+                  child: StaggeredGrid.count(
                     crossAxisCount: 4,
+                    mainAxisSpacing: 4,
                     children: [
                       Image.network(
                           'https://images.unsplash.com/photo-1508739773434-c26b3d09e071?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'),
@@ -121,10 +118,10 @@ class _SearchScreenState extends State<SearchScreen> {
                       Image.network(
                           'https://images.unsplash.com/photo-1493514789931-586cb221d7a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80'),
                     ],
-                  );
-                },
-              ),
-      ),
+                  ),
+                );
+              },
+            ),
     );
   }
 }

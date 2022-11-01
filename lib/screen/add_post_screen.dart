@@ -158,7 +158,9 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 body: Column(
                   children: [
                     _isLoading
-                        ? const LinearProgressIndicator()
+                        ? const LinearProgressIndicator(
+                            color: Colors.blue,
+                          )
                         : const Padding(
                             padding: EdgeInsets.only(
                               top: 0,

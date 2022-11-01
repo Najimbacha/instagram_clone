@@ -60,7 +60,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.search,
+              Icons.search_rounded,
               color: _page == 1 ? primaryColor : secondaryColor,
             ),
             label: "",
@@ -68,7 +68,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.add_circle,
+              Icons.add_circle_outline,
               color: _page == 2 ? primaryColor : secondaryColor,
             ),
             label: "",
@@ -76,7 +76,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.favorite,
+              Icons.favorite_outline_outlined,
               color: _page == 3 ? primaryColor : secondaryColor,
             ),
             label: "",
@@ -84,7 +84,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.person,
+              Icons.person_outline_sharp,
               color: _page == 4 ? primaryColor : secondaryColor,
             ),
             label: "",

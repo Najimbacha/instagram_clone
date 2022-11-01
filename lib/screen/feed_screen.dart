@@ -22,7 +22,7 @@ class FeedScreen extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: const FaIcon(Icons.messenger_outline),
+            icon: const FaIcon(Icons.ios_share_outlined),
             // icon: const Icon(Icons.chat),
           ),
         ],
@@ -37,10 +37,11 @@ class FeedScreen extends StatelessWidget {
             );
           }
           return ListView.builder(
-              itemCount: snapshot.data!.docs.length,
-              itemBuilder: (context, index) => PostCard(
-                    snap: snapshot.data!.docs[index].data(),
-                  ));
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: (context, index) => PostCard(
+              snap: snapshot.data!.docs[index].data(),
+            ),
+          );
         },
       ),
     );
